@@ -1,14 +1,33 @@
+import { useState } from 'react';
+
+const intialInput = {
+  'current-savings': 10000,
+  'yearly-contribution': 1200,
+  'expected-return': 7,
+  duration: 10,
+};
+
 const UserInput = () => {
+  const [userInput, setUserInput] = useState(intialInput);
   // we are using event because in form submition we dont want the browser to reload the page and do the default thing
   const submitHandler = (event) => {
     event.preventDefault();
   };
 
-  const resetHandler = () => {};
+  const resetHandler = () => {
+    setUserInput(intialInput);
+  };
   // in here we expect to get two parameters, and we can't use the way we did it before look onChange
   // current saving in paranthese is identifier and its relate input.. and event.target.value is simply the value
   // provided for value parameter use below
-  const inputChangeHandler = (input, value) => {};
+  const inputChangeHandler = (input, value) => {
+    setUserInput((prevInput) => {
+      return {
+        ...prevInput,
+        [input]: value,
+      };
+    });
+  };
 
   return (
     // here we are not using parenthesis after submitHandler because we want to pass the submitHandler value
@@ -21,6 +40,7 @@ const UserInput = () => {
             onChange={(event) =>
               inputChangeHandler('current-savings', event.target.value)
             }
+            value={userInput['current-savings']}
             type="number"
             id="current-savings"
           />
@@ -31,6 +51,7 @@ const UserInput = () => {
             onChange={(event) =>
               inputChangeHandler('yearly-contribution', event.target.value)
             }
+            value={userInput['yearly-contribution']}
             type="number"
             id="yearly-contribution"
           />
@@ -45,6 +66,7 @@ const UserInput = () => {
             onChange={(event) =>
               inputChangeHandler('expected-return', event.target.value)
             }
+            value={userInput['expected-return']}
             type="number"
             id="expected-return"
           />
@@ -55,6 +77,7 @@ const UserInput = () => {
             onChange={(event) =>
               inputChangeHandler('duration', event.target.value)
             }
+            value={userInput['duration']}
             type="number"
             id="duration"
           />
